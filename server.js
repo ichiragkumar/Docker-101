@@ -17,9 +17,6 @@ app.use(express.json())
 app.use("/api/v1/urls", urlRoutes)
 
 
-app.get("/",(req, res)=>{
-    res.send("welcome my boy")
-})
 
 const startServer = ()=>{
     try {

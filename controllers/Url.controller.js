@@ -2,7 +2,7 @@ import Url from "../models/Url.model.js";
 
 const createShortUrl = async (req, res, next) => {
     try {
-            const  { originalUrl } = req.body
+            const  { originalUrl } =await req.body
 
             const shortUrl = Math.random().toString(16).substring(2,6)
             if(!originalUrl){
@@ -33,6 +33,43 @@ const createShortUrl = async (req, res, next) => {
 }
 
 
+const getUrls = async (req, res, next) =>{
+        try {
+            const getAllUrls = await Url.find({})
+            res.status(200).json({getAllUrls})
+            
+        } catch (error) {
+            console.error(error);   
+            return res.status(500).json({msg:"Internal server error"})
+        }
+}
+
+
+// fettching specific url by shortUrl
+const getUrl = async(req, res, nest)=>{
+    try {
+        
+        const {shortUrl} =await req.params
+        if(!shortUrl){
+            return res.stauts(404).json({msg:"Short url required"})
+
+        }
+
+        const url = await Url.findOne({shortUrl:shortUrl})
+        if(!url){
+            return res.status(404).json({msg:"url not fond"})
+        }
+
+        res.status(200).json({success:true,url})
+
+    } catch (error) {
+        console.error(error);   
+        return res.status(500).json({msg:"Internal server error"})
+    }
+}
+
 export { 
-    createShortUrl 
+    createShortUrl,
+    getUrls,
+    getUrl,
 }
