@@ -1,19 +1,24 @@
 import express from "express"
 import dotenv from "dotenv"
 import connectDB from "./dbConfig/db.js";
+import urlRoutes from "./routes/Url.route.js"
+
+
 dotenv.config();
 
 
 
 const app = express()
 const PORT = process.env.PORT || 5000
+console.log(PORT);
 
 app.use(express.json())
 
+app.use("/api/v1/urls", urlRoutes)
 
-app.get("/",async (req, res)=>{
-    console.log("i am running");
-    res.json({msg:"welcome"})
+
+app.get("/",(req, res)=>{
+    res.send("welcome my boy")
 })
 
 const startServer = ()=>{
@@ -22,9 +27,8 @@ const startServer = ()=>{
         connectDB()
 
         // and start listening to server
-        app.listen(()=>{
-            console.log(`server is running ... `);
-        })
+        app.listen(PORT, () => console.log(`Server started listening on PORT: ${PORT}`));
+
     } catch (error) {
         console.error(error)
         
