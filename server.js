@@ -16,7 +16,10 @@ app.use(express.json())
 
 app.use("/api/v1/urls", urlRoutes)
 
-
+app.get("/", (req, res)=>{
+    console.log("i reached here");
+    res.send("welcomr to docker running")
+})
 
 const startServer = ()=>{
     try {
